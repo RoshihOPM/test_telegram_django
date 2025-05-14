@@ -42,7 +42,7 @@ TELEGRAM_BOT_TOKEN=your_bot_token
 
 ### 4. Сделай миграции и создай суперпользователя
 
-# python manage.py makemigrations
-# python manage.py migrate
-# python manage.py createsuperuser
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
 
