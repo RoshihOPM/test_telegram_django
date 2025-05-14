@@ -42,19 +42,7 @@ TELEGRAM_BOT_TOKEN=your_bot_token
 
 ### 4. Сделай миграции и создай суперпользователя
 
-### python manage.py makemigrations
-### python manage.py migrate
-### python manage.py createsuperuser
-
-
-Структура проекта
-telegrambot_project/
-├── core/              # настройки urls
-├── telegrambot/       # логика webhook и handlers
-├── users/             # модель пользователя
-├── polls/             # модель опросов
-├── .env               # секреты
-├── requirements.txt
-└── manage.py
-
+# python manage.py makemigrations
+# python manage.py migrate
+# python manage.py createsuperuser
 
