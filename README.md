@@ -28,8 +28,10 @@
 
 ### 1. Клонируй репозиторий
 
+```bash
 git clone https://github.com/RoshihOPM/test_telegram_django.git
-### cd core
+cd core
+```
 
 ### 2. Установи зависимости
 
@@ -42,7 +44,8 @@ TELEGRAM_BOT_TOKEN=your_bot_token
 
 ### 4. Сделай миграции и создай суперпользователя
 
+```bash
 python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser
-
+```
