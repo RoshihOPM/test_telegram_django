@@ -14,8 +14,8 @@
 
 ## 🧱 Стек технологий
 
-- Django 4+
-- Python 3.10+
+- Django 5+
+- Python 3.12+
 - requests
 - Telegram Bot API (нативный)
 - Webhook
@@ -30,19 +30,30 @@
 
 ```bash
 git clone https://github.com/RoshihOPM/test_telegram_django.git
-cd core
 ```
 
-### 2. Установи зависимости
+### 2. Установи виртуальную среду и активируй ее
 
+```bash
+python -m venv venv
+```
+source venv/Scripts/activate  # Windows
+# или
+source venv/bin/activate      # macOS/Linux
+
+
+### 3. Установи зависимости
+
+```bash
 pip install -r requirements.txt
+```
 
-### 3. Настрой .env
+### 4. Настрой .env
 Создай файл .env в корне проекта
 
 TELEGRAM_BOT_TOKEN=your_bot_token
 
-### 4. Сделай миграции и создай суперпользователя
+### 5. Сделай миграции и создай суперпользователя
 
 ```bash
 python manage.py makemigrations
