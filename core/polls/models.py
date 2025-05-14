@@ -8,7 +8,9 @@ class PollModel(models.Model):
         UserProfileModel,
         on_delete=models.CASCADE,
         related_name='user_polls',
-        db_index=True
+        db_index=True,
+        null=True,
+        blank=True
     )
 
     telegram_poll_id = models.CharField(
