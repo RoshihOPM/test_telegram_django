@@ -52,8 +52,18 @@ pip install -r requirements.txt
 Создай файл .env в корне проекта
 
 TELEGRAM_BOT_TOKEN=your_bot_token
+WEBHOOK_URL=your_webhook_url
 
-### 5. Сделай миграции и создай суперпользователя
+
+### 5. Добавь url вебхука телеграм боту
+
+```bash
+cd core
+python set_webhook.py
+```
+
+
+### 6. Сделай миграции и создай суперпользователя
 
 ```bash
 python manage.py makemigrations
