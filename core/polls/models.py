@@ -17,7 +17,7 @@ class PollModel(models.Model):
         blank=True,
         db_index=True
     )
-    
+
     question = models.TextField()
     options = models.JSONField(default=list, null=True, blank=True)
     user_options = models.JSONField(default=list, null=True, blank=True)
