@@ -1,6 +1,8 @@
-import json
 import logging
-from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 
 from telegrambot.services.telegram_api import TelegramApi
@@ -18,31 +20,27 @@ COMMAND_HANDLERS = {
     "/poll": PollHandler(telegram_api),
 }
 
-@csrf_exempt
-def telegram_webhook(request):
-    if request.method != "POST":
-        logger.warning("Invalid method (not POST)")
-        return JsonResponse({"error": "Invalid method"}, status=405)
+@method_decorator(csrf_exempt, name='dispatch')
+class TelegramWebhookView(APIView):
+    def post(self, request, *args, **kwargs):
+        try:
+            data = request.data
+            logger.debug(f"Получен update: {data}")
+        except Exception as e:
+            logger.error(f"Ошибка парсинга JSON: {e}")
+            return Response({"error": "Invalid JSON"}, status=status.HTTP_400_BAD_REQUEST)
 
-    try:
-        data = json.loads(request.body)
-        logger.debug(f"Получен update: {data}")
+        if "message" in data:
+            chat_id = data["message"]["chat"]["id"]
+            text = data["message"].get("text", "")
 
-    except Exception as e:
-        logger.error(f"Ошибка парсинга JSON: {e}")
-        return JsonResponse({"error": "Invalid JSON"}, status=400)
+            handler = COMMAND_HANDLERS.get(text)
+            if handler:
+                handler.handle(chat_id)
+            else:
+                logger.info(f"Неизвестная команда от chat_id={chat_id}: {text}")
 
-    if "message" in data:
-        chat_id = data["message"]["chat"]["id"]
-        text = data["message"].get("text", "")
+        elif "poll_answer" in data:
+            PollAnswerHandler().handle(data["poll_answer"])
 
-        handler = COMMAND_HANDLERS.get(text)
-        if handler:
-            handler.handle(chat_id)
-        else:
-            logger.info(f"Неизвестная команда от chat_id={chat_id}: {text}")
-
-    elif "poll_answer" in data:
-        PollAnswerHandler().handle(data["poll_answer"])
-
-    return JsonResponse({"ok": True})
+        return Response({"ok": True}, status=status.HTTP_200_OK)
