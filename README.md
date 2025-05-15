@@ -15,6 +15,7 @@
 ## 🧱 Стек технологий
 
 - Django 5+
+- DjangoRestFramework 3+
 - Python 3.12+
 - requests
 - Telegram Bot API (нативный)
