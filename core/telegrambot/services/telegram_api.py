@@ -1,5 +1,9 @@
 import json
 import requests
+import logging
+
+
+logger = logging.getLogger('telegrambot')
 
 
 class TelegramApi:
@@ -16,12 +20,14 @@ class TelegramApi:
             )
 
     def send_poll(self, chat_id, question, options):
-        return requests.post(
-            f'{self.api_url}sendPoll',
-            data={
-                'chat_id': chat_id,
-                'question': question,
-                'options': json.dumps(options),
-                'is_anonymous': False
-            }
-        )
+        url = f"{self.api_url}sendPoll"
+        payload = {
+            "chat_id": chat_id,
+            "question": question,
+            "options": options,
+            "is_anonymous": False,
+        }
+        
+        response = requests.post(url, json=payload)
+
+        return response
